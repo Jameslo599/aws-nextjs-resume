@@ -20,9 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${ebGaramond.className} min-h-screen antialiased bg-black`}
-      >
+      <body className={`${ebGaramond.className} antialiased bg-slate-950`}>
         {children}
       </body>
     </html>

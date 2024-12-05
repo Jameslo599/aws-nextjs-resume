@@ -1,9 +1,15 @@
-/// <reference path="./.sst/platform/config.d.ts" />
+///<reference path="./.sst/platform/config.d.ts" />
 
 export default $config({
   app(input) {
     return {
       name: 'aws-nextjs-resume',
+      providers: {
+        aws: {
+          profile:
+            input.stage === 'production' ? 'Master-production' : 'Master-dev',
+        },
+      },
       removal: input?.stage === 'production' ? 'retain' : 'remove',
       home: 'aws',
     };
