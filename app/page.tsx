@@ -1,10 +1,10 @@
 export default function Home() {
   return (
     <div className="h-full flex flex-col justify-center">
-      <main className="max-w-[45rem] bg-slate-50 mx-auto p-8 rounded">
+      <main className="max-w-[45rem] bg-slate-50 mx-auto p-8 my-8 md:rounded text-black">
         <header className="text-center">
           <h1 className="text-3xl mb-2">James Lo</h1>
-          <div className="flex flex-wrap justify-center align-middle text-sm">
+          <div className="flex flex-wrap justify-center align-middle text-base">
             <a href="mailto:jameslo599@gmail.com">
               <span className="hover:text-blue-700">Jameslo599@gmail.com</span>{' '}
               |

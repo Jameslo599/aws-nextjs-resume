@@ -20,6 +20,10 @@ export default $config({
     });
     new sst.aws.Nextjs('MyWeb', {
       link: [bucket],
+      domain: {
+        name: 'awsjameslo.com',
+        cert: 'arn:aws:acm:us-east-1:503561410637:certificate/895c941f-82a2-470d-a594-cd90234efd2a',
+      },
     });
   },
 });
