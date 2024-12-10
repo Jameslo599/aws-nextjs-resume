@@ -13,3 +13,7 @@ Setup a custom domain awsjameslo.com by first purchasing a domain name on PorkBu
 Used TypeScript to implement a Counter component that will make an API call to get the total visitor count number and display it on the frontend.
 
 To prevent DNS spoofing ("main-in-the-middle") attacks, I configured DNSSEC on Route 53 by creating a key-signing key (KSK) using AWS KMS and using the key to establish a chain of trust with my domain registrar PorkBun. I am still figuring out automation of key rotation, but for now I will use the double-RR method to rotate my keys every 90 days.
+
+<!-- Visitor Counter -->
+
+To implement a visitor counter on the site, I used DynamoDB to create a table 'cloud-resume-visitors' with the partition key 'website_name' and sort key 'website_id'. Next, I added the 'total_visitors' property to track the total number of site visitors. I utilized AWS Lambda to create a python function that will increment the incoming requests's 'total_visitors' value by one and update the 'cloud-resume-visitors' table in DynamoDB. This was great, however the Lambda function did not have permissions to modify the table so I had to create a new Role in IAM with the DynamoDBFullAccess policy and assign it to my function.
