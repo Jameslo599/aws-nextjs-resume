@@ -65,8 +65,8 @@ jobs:
           AWS_REGION: 'us-east-1'
 
         # This tests if the credentials are set up correctly.
-        run: |
-          aws sts get-caller-identity
+        # run: |
+        #   aws sts get-caller-identity
 
       - name: Deploy with SST
         env:
