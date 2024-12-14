@@ -1,4 +1,4 @@
-<!-- Using SST to upload Next.js to AWS S3 and CloudFront -->
+-- Using SST to upload Next.js to AWS S3 and CloudFront --
 
 To learn AWS, I initially wanted to just make a static site with vanilla HTML and CSS, but because I think Next.js will be ubiquitous in the future, I wanted to get ahead by learning how to deploy based on my own infrastructure. Doing so will be a great cost-saving tool in the future as I no longer have to rely on Vercel to host my sites. Besides, Vercel uses AWS under the hood anyway so removing that abstraction ultimately leads to the same result. Although, I'm hoping site speed and performance improves when self-deploying.
 
@@ -14,10 +14,14 @@ Used TypeScript to implement a Counter component that will make an API call to g
 
 To prevent DNS spoofing ("main-in-the-middle") attacks, I configured DNSSEC on Route 53 by creating a key-signing key (KSK) using AWS KMS and using the key to establish a chain of trust with my domain registrar PorkBun. I am still figuring out automation of key rotation, but for now I will use the double-RR method to rotate my keys every 90 days.
 
-<!-- Visitor Counter -->
+-- Visitor Counter --
 
 To implement a visitor counter on the site, I used DynamoDB to create a table 'cloud-resume-visitors' with the partition key 'website_name' and sort key 'website_id'. Next, I added the 'total_visitors' property to track the total number of site visitors. I utilized AWS Lambda to create a python function that will increment the incoming requests's 'total_visitors' value by one and update the 'cloud-resume-visitors' table in DynamoDB. This was great, however the Lambda function did not have permissions to modify the table so I had to create a new Role in IAM with the DynamoDBFullAccess policy and assign it to my function.
 
 To trigger the function externally, I setup an Amazon-managed API Gateway and opted for the REST API for full control over my endpoints. Once connected to my Lambda function, I tested the endpoint using the API Gateway console, deployed api and then tested again with Postman. It was easy to setup the PUT request as I could send event data through the request body. However, when setting up the GET request to obtain the counter value, I did not have a body tag to work with so I needed to enable Lambda proxy integration to transform my method request into a standard http request. Doing so caused an internal server error but I realized this was because the response needed to be returned in a specific format.
 
 The default API endpoint was quite verbose and hard to read so I opted to setup a custom domain api.awsjameslo.com to remedy these problems. Doing so was straightforward and I just had to request a new ACM and verify by creating records in Route53. Since this subdomain belonged to the root domain, I didn't need to pay extra for a second managed DNS host. Then I just had to create a new A record that pointed to API Gateway API and my new custom endpoints were valid.
+
+Now it was time to connect the frontend to backend. I created a Counter component using TypeScript which makes two API calls upon initialization: one to getCounter and then one to incrementCounter. Since I already tested my endpoints using AWS web console and Postman, I didn't have to repeat that here. After deploying to production, I noticed the app counter was not updating nor making the API calls. Since it worked locally, I thought it could have been a CORS issue but I enabled it previously. The next suspicion was S3 caching so I performed an invalidation and that didn't fix the issue. I also checked my API gateway but I didn't enable cache provisioning. Since Next.js uses 'no cache' by default, I thought it was working as intended, but I decided to change the caching to 'no store' instead and the bug was fixed.
+
+-- CI/CD Pipeline --
