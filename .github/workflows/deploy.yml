@@ -59,9 +59,8 @@ jobs:
         # Deploy SST Next.js app
       - name: Deploy
         env:
-          AWS_PROD_ACCESS_KEY_ID: ${{ secrets.AWS_PROD_ACCESS_KEY_ID }}
-          AWS_PROD_SECRET_ACCESS_KEY: ${{ secrets.AWS_PROD_SECRET_ACCESS_KEY }}
-
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_PROD_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_PROD_SECRET_ACCESS_KEY }}
           AWS_ARN_CERTIFICATE: ${{ secrets.AWS_ARN_CERTIFICATE }}
 
         run: |

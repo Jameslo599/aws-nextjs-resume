@@ -5,12 +5,6 @@ export default $config({
     return {
       name: 'aws-nextjs-resume',
       region: 'us-east-1',
-      providers: {
-        aws: {
-          profile:
-            input.stage === 'production' ? 'Master-production' : 'Master-dev',
-        },
-      },
       removal: input?.stage === 'production' ? 'retain' : 'remove',
       home: 'aws',
     };
@@ -35,6 +29,7 @@ export default $config({
   },
 });
 
+// Revert to profiles instead of env variables
 // export default $config({
 //   app(input) {
 //     return {
