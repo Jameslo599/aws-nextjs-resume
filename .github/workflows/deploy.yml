@@ -56,18 +56,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-nextjs-${{ hashFiles('**/pnpm-lock.yaml') }}-
 
-      # - name: Set up AWS credentials
-      #   uses: aws-actions/configure-aws-credentials@v4.0.2
-      #   with:
-      #     AWS-ACCESS-KEY-ID: ${{ secrets.AWS_PROD_ACCESS_KEY_ID }}
-      #     AWS-SECRET-ACCESS-KEY: ${{ secrets.AWS_PROD_SECRET_ACCESS_KEY }}
-      #     AWS-SESSION-TOKEN: ${{ secrets.AWS_PROD_SESSION_TOKEN }}
-      #     AWS-REGION: 'us-east-1'
-
-      # This tests if the credentials are set up correctly.
-      # run: |
-      #   aws sts get-caller-identity
-
       - name: Deploy with SST
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_PROD_ACCESS_KEY_ID }}

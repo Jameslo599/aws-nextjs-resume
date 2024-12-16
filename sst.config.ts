@@ -20,6 +20,8 @@ export default $config({
           process.env.AWS_PROD_ACCESS_KEY_ID ?? 'fallback',
         AWS_PROD_SECRET_ACCESS_KEY:
           process.env.AWS_PROD_SECRET_ACCESS_KEY ?? 'fallback',
+        AWS_PROD_SESSION_TOKEN:
+          process.env.AWS_PROD_SESSION_TOKEN ?? 'fallback',
       },
       domain: {
         name: 'awsjameslo.com',
