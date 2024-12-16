@@ -56,13 +56,19 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-nextjs-${{ hashFiles('**/pnpm-lock.yaml') }}-
 
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4.0.2
+        with:
+          role-to-assume: arn:aws:iam::503561410637:role/github-ci-cd
+          aws-region: us-east-1
+
       - name: Deploy with SST
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_PROD_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_PROD_SECRET_ACCESS_KEY }}
-          AWS_ARN_CERTIFICATE: ${{ secrets.AWS_ARN_CERTIFICATE }}
-          AWS_SESSION_TOKEN: ${{ secrets.AWS_PROD_SESSION_TOKEN }}
-          AWS_REGION: 'us-east-1'
+        # env:
+        #   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_PROD_ACCESS_KEY_ID }}
+        #   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_PROD_SECRET_ACCESS_KEY }}
+        #   AWS_ARN_CERTIFICATE: ${{ secrets.AWS_ARN_CERTIFICATE }}
+        #   AWS_SESSION_TOKEN: ${{ secrets.AWS_PROD_SESSION_TOKEN }}
+        #   AWS_REGION: 'us-east-1'
 
         run: |
           npx sst deploy --stage production
