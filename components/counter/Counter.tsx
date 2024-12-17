@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 
 async function fetchVisitorCount() {
   const response = await fetch(
-    'https://api.awsjameslo.com/getCounter?website_name=awsjameslo&website_id=0',
+    'https://api.awsjameslo.com/rdsGetCounter?website_name=awsjameslo&website_id=0',
     {
       headers: {
         'Content-Type': 'application/json',
@@ -16,22 +16,25 @@ async function fetchVisitorCount() {
 }
 
 async function incrementVisitorCount(count: number) {
-  const response = await fetch('https://api.awsjameslo.com/incrementCounter', {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    cache: 'no-store',
-    body: JSON.stringify({
-      website_name: 'awsjameslo',
-      website_id: 0,
-      total_visitors: count,
-    }),
-  });
+  const response = await fetch(
+    'https://api.awsjameslo.com/rdsIncrementCounter',
+    {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      cache: 'no-store',
+      body: JSON.stringify({
+        website_name: 'awsjameslo',
+        website_id: 0,
+        total_visitors: count,
+      }),
+    }
+  );
 
   const data = await response.json();
   console.log(data);
-  return data.Item?.total_visitors;
+  return data.Item?.total_visitors || data;
 }
 
 function Counter() {
@@ -59,7 +62,7 @@ function Counter() {
           <span className="font-semibold text-red-500">{error}</span>
         ) : (
           <>
-            All-time Visitors:{` `}
+            All-Time Visitors:{` `}
             <span className="font-semibold">
               {count ? count : 'Loading...'}
             </span>
