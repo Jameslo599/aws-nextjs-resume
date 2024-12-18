@@ -1,40 +1,39 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 
-async function fetchVisitorCount() {
-  const response = await fetch(
-    'https://api.awsjameslo.com/rdsGetCounter?website_name=awsjameslo&website_id=0',
-    {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      cache: 'no-store',
-    }
-  );
+async function fetchVisitorCount(rds: boolean) {
+  const query = rds
+    ? 'https://api.awsjameslo.com/rdsGetCounter?website_name=awsjameslo&website_id=0'
+    : 'https://api.awsjameslo.com/getCounter?website_name=awsjameslo&website_id=0';
+  const response = await fetch(`${query}`, {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    cache: 'no-store',
+  });
   const data = await response.json();
   return data;
 }
 
-async function incrementVisitorCount(count: number) {
-  const response = await fetch(
-    'https://api.awsjameslo.com/rdsIncrementCounter',
-    {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      cache: 'no-store',
-      body: JSON.stringify({
-        website_name: 'awsjameslo',
-        website_id: 0,
-        total_visitors: count,
-      }),
-    }
-  );
+async function incrementVisitorCount(count: number, rds: boolean) {
+  const query = rds
+    ? 'https://api.awsjameslo.com/rdsIncrementCounter'
+    : 'https://api.awsjameslo.com/incrementCounter';
+  const response = await fetch(`${query}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    cache: 'no-store',
+    body: JSON.stringify({
+      website_name: 'awsjameslo',
+      website_id: 0,
+      total_visitors: count,
+    }),
+  });
 
   const data = await response.json();
-  console.log(data);
-  return data.Item?.total_visitors || data;
+  return rds ? data : data.Item?.total_visitors;
 }
 
 function Counter() {
@@ -44,8 +43,8 @@ function Counter() {
   useEffect(() => {
     async function updateCount() {
       try {
-        const count = await fetchVisitorCount();
-        const updatedCount = await incrementVisitorCount(count);
+        const count = await fetchVisitorCount(true);
+        const updatedCount = await incrementVisitorCount(count, true);
         setCount(updatedCount || count);
       } catch (err) {
         console.error(err);
