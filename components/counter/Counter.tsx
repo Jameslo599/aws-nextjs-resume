@@ -43,16 +43,20 @@ function Counter() {
   useEffect(() => {
     async function updateCount() {
       try {
-        const count = await fetchVisitorCount(true);
-        const updatedCount = await incrementVisitorCount(count, true);
-        setCount(updatedCount || count);
+        const currentCount = await fetchVisitorCount(true);
+        if (currentCount !== count) {
+          const updatedCount = await incrementVisitorCount(currentCount, true);
+          setCount(updatedCount || count);
+        }
       } catch (err) {
         console.error(err);
         setError('Unable to load visitor count');
       }
     }
-    updateCount();
-  }, []);
+    if (count === null) {
+      updateCount();
+    }
+  }, [count]);
 
   return (
     <nav className="bg-slate-300 py-2 text-center text-xl text-black">
