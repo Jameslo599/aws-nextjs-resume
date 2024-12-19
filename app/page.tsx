@@ -6,15 +6,14 @@ export default function Home() {
           <h1 className="text-3xl mb-2">James Lo</h1>
           <div className="flex flex-wrap justify-center align-middle text-base">
             <a href="mailto:jameslo599@gmail.com">
-              <span className="hover:text-blue-700">Jameslo599@gmail.com</span>{' '}
-              |
+              <span className="hover:text-blue-700">Email</span> |
             </a>
             <a href="jameshlo.com" target="_blank">
               &nbsp;<span className="hover:text-blue-700">Portfolio</span> |
             </a>
             <a href="tel:+2149010531">
               &nbsp;
-              <span className="hover:text-blue-700">(214)-901-0531</span> |{' '}
+              <span className="hover:text-blue-700">Phone</span> |{' '}
             </a>
             <a href="http://linkedin.com/in/james-h-lo" target="_blank">
               &nbsp;<span className="hover:text-blue-700">LinkedIn</span> |
