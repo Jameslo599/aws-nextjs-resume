@@ -43,9 +43,9 @@ function Counter() {
   useEffect(() => {
     async function updateCount() {
       try {
-        const currentCount = await fetchVisitorCount(true);
+        const currentCount = await fetchVisitorCount(false);
         if (currentCount !== count) {
-          const updatedCount = await incrementVisitorCount(currentCount, true);
+          const updatedCount = await incrementVisitorCount(currentCount, false);
           setCount(updatedCount || count);
         }
       } catch (err) {
