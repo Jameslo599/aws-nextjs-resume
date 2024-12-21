@@ -36,3 +36,6 @@ For a more cost-effective solution or if a SQL DB is preferred, I also implement
 
 -- CloudWatch Alarms --
 To monitor my applications, I setup three alarms: one for high API gateway latency and two for excessive Lambda invocations and errors within a time-frame. I really like the UI for this feature and it's amazing how generous Amazon is with their free-tier. I used AWS SNS to email me when an alarm is in alert mode which. To add additional integrations, I setup PagerDuty as an HTTPS subscription to my SNS topic and this will send a push notification through the mobile app on my phone when a CloudWatch alarm goes off. This makes it very hard to miss alerts and I can also schedule an on-call rotation if needed. I also setup Slack integration as a Lambda subscription to my SNS topic and this is great just to keep everyone in the team on the same page.
+
+-- IAM Access Analyzer --
+To better enforce principle of least privilege, I utilized the IAM Access Analyzer to detect unused roles and permissions. I found that this tool was extremely helpful in identifying over-permissive roles and providing recommended policies for substitution. One of my biggest worries was having to manually writes each policy, but I've been using the recommended policies without any issue.

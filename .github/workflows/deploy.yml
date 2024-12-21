@@ -66,6 +66,12 @@ jobs:
           role-to-assume: arn:aws:iam::503561410637:role/github-ci-cd
           aws-region: us-east-1
 
+      - name: Validate IAM Policies
+        run: |
+          for file in $(find policies/ -name "*.json"); do
+            aws iam validate-policy --policy-document file://$file
+          done
+
       - name: Deploy with SST
         run: |
           npx sst deploy --stage production
