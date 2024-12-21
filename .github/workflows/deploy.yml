@@ -74,11 +74,11 @@ jobs:
             echo "$output"
             if echo "$output" | grep -q '"findingType": "ERROR"'; then
               error=$(echo "$output" | jq -r ".findings[].issueCode")
-              echo "Policy validation failed for $file with ERROR: $error findings"
+              echo "Policy validation failed for $file with ERROR: $error"
               exit 1
             fi
           done
 
-      # - name: Deploy with SST
-      #   run: |
-      #     npx sst deploy --stage production
+      - name: Deploy with SST
+        run: |
+          npx sst deploy --stage production
