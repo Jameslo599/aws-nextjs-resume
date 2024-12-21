@@ -69,7 +69,7 @@ jobs:
       - name: Validate IAM Policies
         run: |
           for file in $(find policies/ -name "*.json"); do
-            aws accessanalyzer validate-policy --policy-document file://$file
+            aws accessanalyzer validate-policy --policy-type IDENTITY_POLICY --policy-document file://$file
           done
 
       # - name: Deploy with SST
