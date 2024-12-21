@@ -3,7 +3,7 @@
   "Statement": [
     {
       "Effect": "Allow",
-      "Action": ["exc2:RunInstance"],
+      "Action": ["exc2:RunInstances"],
       "Resource": "arn:aws:ec2:*:*:instance/my-custom-instance"
     }
   ]
