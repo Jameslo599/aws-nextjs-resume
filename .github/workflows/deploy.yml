@@ -70,10 +70,10 @@ jobs:
         run: |
           for file in $(find policies/ -name "*.json"); do
             echo "Validating $file"
-            output = $(aws accessanalyzer validate-policy --policy-type IDENTITY_POLICY --policy-document file://$file)
+            output=$(aws accessanalyzer validate-policy --policy-type IDENTITY_POLICY --policy-document file://$file)
             echo "$output"
             if echo "$output" | grep -q '"findingType": "ERROR"'; then
-              error = $(echo "$output" | jq -r ".findings[].issueCode")
+              error=$(echo "$output" | jq -r ".findings[].issueCode")
               echo "Policy validation failed for $file with ERROR: $error findings"
               exit 1
             fi
