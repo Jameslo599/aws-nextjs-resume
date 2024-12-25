@@ -7,7 +7,8 @@
     "dev": "next dev",
     "lint": "next lint",
     "start": "next start",
-    "sso": "aws sso login --sso-session=Master"
+    "sso": "aws sso login --sso-session=Master",
+    "cy:open": "cypress open"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.705.0",
@@ -21,6 +22,7 @@
     "@types/node": "^20.17.9",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "cypress": "^13.17.0",
     "eslint": "^8",
     "eslint-config-next": "15.0.3",
     "postcss": "^8",

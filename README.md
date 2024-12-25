@@ -39,3 +39,5 @@ To monitor my applications, I setup three alarms: one for high API gateway laten
 
 -- IAM Access Analyzer --
 To better enforce principle of least privilege, I utilized the IAM Access Analyzer to detect unused roles and permissions. I found that this tool was extremely helpful in identifying over-permissive roles and providing recommended policies for substitution. One of my biggest worries was having to manually writes each policy, but I've been using the recommended policies without any issue.
+
+In addition, I also added the access analyzer to my CI/CD pipeline to validate policies written in /policies before merging the pull request. This is to ensure that over-permissive or erroneous policies never make it to the cloud. I essentially wrote a script that checks every .json file in /policies and if an error is detected, I stop the workflow with 'exit 1'. I learned how to do this after going through AWS's 'Integrating AWS IAM Access Analyzer in a CI/CD Pipeline' workshop.
