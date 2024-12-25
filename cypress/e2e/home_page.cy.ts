@@ -8,7 +8,7 @@ describe('Visit page', () => {
       'GET',
       'https://api.awsjameslo.com/getCounter?website_id=0&website_name=awsjameslo'
     ).then((response) => {
-      expect(response.body[0]).to.be.a('number');
+      expect(response.body).to.be.a('number');
     });
   });
 

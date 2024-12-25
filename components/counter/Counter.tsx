@@ -12,7 +12,7 @@ async function fetchVisitorCount(rds: boolean) {
     cache: 'no-store',
   });
   const data = await response.json();
-  return data[0];
+  return data;
 }
 
 async function incrementVisitorCount(count: number, rds: boolean) {
