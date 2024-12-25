@@ -155,6 +155,9 @@ jobs:
             echo "Policies successfully validated!"
           done
 
+      - name: Unlock SST
+        run: npx sst unlock --stage production
+
       - name: Deploy with SST
         run: |
           npx sst deploy --stage production
