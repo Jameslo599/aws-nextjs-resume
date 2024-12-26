@@ -15,6 +15,23 @@ async function fetchVisitorCount(rds: boolean) {
   return data;
 }
 
+async function checkUnique() {
+  const query = 'https://api.awsjameslo.com/checkUnique';
+  const response = await fetch(`${query}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    cache: 'no-store',
+    body: JSON.stringify({
+      website_name: 'awsjameslo',
+    }),
+  });
+
+  const data = response.json();
+  return data;
+}
+
 async function incrementVisitorCount(count: number, rds: boolean) {
   const query = rds
     ? 'https://api.awsjameslo.com/rdsIncrementCounter'
@@ -44,9 +61,11 @@ function Counter() {
     async function updateCount() {
       try {
         const currentCount = await fetchVisitorCount(false);
-        if (currentCount !== count) {
+        setCount(currentCount);
+        const unique = await checkUnique();
+        if (unique) {
           const updatedCount = await incrementVisitorCount(currentCount, false);
-          setCount(updatedCount || count);
+          setCount(updatedCount);
         }
       } catch (err) {
         console.error(err);
