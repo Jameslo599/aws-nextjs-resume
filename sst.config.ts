@@ -20,15 +20,12 @@ export default $config({
       fields: {
         website: 'string',
         id: 'number',
-        visitors: 'number',
       },
       primaryIndex: { hashKey: 'website', rangeKey: 'id' },
     });
     const ipTable = new sst.aws.Dynamo('ip', {
       fields: {
         ip_address: 'string',
-        updated: 'string',
-        name: 'string',
       },
       primaryIndex: { hashKey: 'ip_address' },
     });
