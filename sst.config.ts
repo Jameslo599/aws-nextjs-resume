@@ -10,11 +10,21 @@ export default $config({
     };
   },
   async run() {
+    // S3
     const bucket = new sst.aws.Bucket('MyBucket', {
       access: 'public',
     });
+    // DynamoDB
+    const table = new sst.aws.Dynamo('MyTable', {
+      fields: {
+        userId: 'string',
+        noteId: 'string',
+      },
+      primaryIndex: { hashKey: 'userId', rangeKey: 'noteId' },
+    });
+    // Next.js
     new sst.aws.Nextjs('MyWeb', {
-      link: [bucket],
+      link: [bucket, table],
       environment: {
         AWS_PROD_ACCESS_KEY_ID:
           process.env.AWS_PROD_ACCESS_KEY_ID ?? 'fallback',

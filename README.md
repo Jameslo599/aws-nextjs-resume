@@ -50,3 +50,6 @@ At this point, the counter will increment but it is on every page refresh. This 
 
 **Firewalls and Throttling**
 Currently, my API is a public API, meaning anyone on the internet can find it and make requests directly, opening myself to injection and DDoS attacks. The best way to mitigate these risks is to use a web application firewall (WAF). I learned how to do so with AWS WAF to combat bots, untrustworthy IP addresses, common OWASP exploits, bad inputs, Linux and Windows OS exploits. However, there is a cost associated with running a WAF so at this point I decided to forego the firewall. Instead, I implemented a usage plan for API-level throttling so clients cannot make an egregious amount of requests and the max number of requests per expected visitors per month is well within the free-tier limits.
+
+**Infrastructure as Code (IaC) with Terraform**
+I decided to use Terraform instead of AWS SAM or CloudFormation because Terraform is a multi-cloud tool that most developers use and there's no vendor lock-in. Installing Terraform and Docker was mostly straightforward but I did run into an issue with permissions when deploying an nginx test server. I tried a myriad of solutions from using 'docker context ls' to adding my user to the docker group. Ultimately, I performed a 'sudo reboot' and that resolved the issue.
