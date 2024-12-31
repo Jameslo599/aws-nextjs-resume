@@ -14,17 +14,28 @@ export default $config({
     const bucket = new sst.aws.Bucket('MyBucket', {
       access: 'public',
     });
+
     // DynamoDB
-    const table = new sst.aws.Dynamo('MyTable', {
+    const visitorsTable = new sst.aws.Dynamo('visitors', {
       fields: {
-        userId: 'string',
-        noteId: 'string',
+        website: 'string',
+        id: 'number',
+        visitors: 'number',
       },
-      primaryIndex: { hashKey: 'userId', rangeKey: 'noteId' },
+      primaryIndex: { hashKey: 'website', rangeKey: 'id' },
     });
+    const ipTable = new sst.aws.Dynamo('ip', {
+      fields: {
+        ip_address: 'string',
+        updated: 'string',
+        name: 'string',
+      },
+      primaryIndex: { hashKey: 'ip_address' },
+    });
+
     // Next.js
     new sst.aws.Nextjs('MyWeb', {
-      link: [bucket, table],
+      link: [bucket, visitorsTable, ipTable],
       environment: {
         AWS_PROD_ACCESS_KEY_ID:
           process.env.AWS_PROD_ACCESS_KEY_ID ?? 'fallback',
