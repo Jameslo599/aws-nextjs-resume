@@ -1,6 +1,6 @@
 {
   "extends": ["next/core-web-vitals", "next/typescript"],
   "rules": {
-    "triple-slash-reference": false
+    "triple-slash-reference": 0
   }
 }

@@ -33,17 +33,8 @@ export default $config({
     // Next.js
     new sst.aws.Nextjs('MyWeb', {
       link: [bucket, visitorsTable, ipTable],
-      // environment: {
-      //   AWS_PROD_ACCESS_KEY_ID:
-      //     process.env.AWS_PROD_ACCESS_KEY_ID ?? 'fallback',
-      //   AWS_PROD_SECRET_ACCESS_KEY:
-      //     process.env.AWS_PROD_SECRET_ACCESS_KEY ?? 'fallback',
-      //   AWS_PROD_SESSION_TOKEN:
-      //     process.env.AWS_PROD_SESSION_TOKEN ?? 'fallback',
-      // },
       domain: {
         name: 'awsjameslo.com',
-        // cert: process.env.AWS_ARN_CERTIFICATE,
       },
     });
   },
