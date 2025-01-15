@@ -8,14 +8,14 @@ export default function Home() {
             <a href="mailto:jameslo599@gmail.com">
               <span className="hover:text-blue-700">Email</span> |
             </a>
-            <a href="jameshlo.com" target="_blank">
+            <a href="https://jameshlo.com" target="_blank">
               &nbsp;<span className="hover:text-blue-700">Portfolio</span> |
             </a>
             <a href="tel:+2149010531">
               &nbsp;
               <span className="hover:text-blue-700">Phone</span> |{' '}
             </a>
-            <a href="http://linkedin.com/in/james-h-lo" target="_blank">
+            <a href="https://linkedin.com/in/james-h-lo" target="_blank">
               &nbsp;<span className="hover:text-blue-700">LinkedIn</span> |
             </a>
             <a href="https://github.com/Jameslo599" target="_blank">
@@ -33,12 +33,12 @@ export default function Home() {
           </div>
           <div>
             <span className="font-bold">Technologies:&nbsp;</span>
-            React, Next.js, Node.js, Express.js, MongoDB NoSQL, PostgreSQL,
-            MySQL, Git, Linux
+            React, Next.js, Node.js, Express.js, MongoDB, PostgreSQL, MySQL,
+            Git, Linux
           </div>
           <div>
             <span className="font-bold">Certifications:&nbsp;</span>
-            Amazon Web Services Certified Cloud Practitioner
+            AWS Solutions Architect Associate, AWS Certified Cloud Practitioner
           </div>
         </section>
         <section className="pt-2 text-sm">
@@ -51,24 +51,24 @@ export default function Home() {
           </div>
           <ul className="list-disc ml-5">
             <li>
-              Increase client revenue by 10% from optimizing and debugging
-              websites built with React and Express.
+              Deployed 20+ custom websites built on serverless AWS architecture
+              that are highly scalable and resilient.
             </li>
             <li>
-              Deploy 20+ custom websites across various industries, achieving
-              100% client satisfaction.
+              Achieved 0 incidents of app downtime from DDoS and common attacks
+              with AWS Shield Adv. and WAF.
             </li>
             <li>
-              Boost SEO rankings for a 25% increase in organic traffic using
-              technical best practices and web architecture.
+              Reduced monthly client expenses by 40% with AWS Cost Explorer and
+              CloudWatch metrics.
             </li>
             <li>
-              Manage full stack and frontend development using modern frameworks
-              such as React and Express.
+              Managed full stack and frontend development using modern
+              frameworks such as Next,js, React and Express.
             </li>
             <li>
-              Manage E2E deployment and maintain database with SQL and
-              PostgreSQL.
+              Implemented CI/CD pipelines with Terraform and used E2E testing
+              with Cypress for 20% faster development.
             </li>
           </ul>
           <div className="relative pt-1">
@@ -99,10 +99,12 @@ export default function Home() {
           <h2 className="text-lg">Projects</h2>
           <div className="after:content-[''] border-t-[1px] border-black"></div>
           <div className="relative pt-1">
-            <span className="font-bold">Banking Pentest Environment&nbsp;</span>
+            <span className="font-bold">
+              Capture-the-Flag Bank Platform&nbsp;
+            </span>
             <a
-              className="sm:absolute right-0"
-              href="resilientcoda.com"
+              className="sm:absolute right-0 hover:text-blue-700"
+              href="https://resilientcoda.com"
               target="_blank"
             >
               resilientcoda.com
@@ -139,8 +141,8 @@ export default function Home() {
           <div className="relative pt-1">
             <span className="font-bold">Tarot Reader&nbsp;</span>
             <a
-              className="absolute right-0"
-              href="tarot-api.up.railway.app"
+              className="absolute right-0 hover:text-blue-700"
+              href="https://tarot-api.up.railway.app"
               target="_blank"
             >
               tarot-api.up.railway.app
