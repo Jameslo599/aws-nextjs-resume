@@ -80,6 +80,11 @@ jobs:
             echo "Policies successfully validated!"
           done
 
+      # Create deployment package (ZIP)
+      - name: Create deployment package
+        run: |
+          zip -r terraGetCounter.zip ./lambda/terraGetCounter/terraGetCounter.py
+
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
 

@@ -46,7 +46,7 @@ next-env.d.ts
 .open-next
 
 # aws lambda
-/lambda
+*.zip
 
 # terraform
 terraform.tfstate
