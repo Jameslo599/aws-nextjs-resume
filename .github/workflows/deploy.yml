@@ -83,7 +83,7 @@ jobs:
       # Create deployment package (ZIP)
       - name: Create deployment package
         run: |
-          zip -r terraGetCounter.zip ./lambda/terraGetCounter/terraGetCounter.py
+          zip -r terraGetCounter.zip ./lambda/terraGetCounter.py
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
