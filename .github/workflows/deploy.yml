@@ -80,6 +80,15 @@ jobs:
             echo "Policies successfully validated!"
           done
 
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Plan
+        run: terraform plan
+
+      - name: Terraform Apply
+        run: terraform apply -auto-approve
+
       - name: Deploy with SST
         run: |
           npx sst deploy --stage production
