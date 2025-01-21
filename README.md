@@ -53,3 +53,5 @@ Currently, my API is a public API, meaning anyone on the internet can find it an
 
 **Infrastructure as Code (IaC) with Terraform**
 I decided to use Terraform instead of AWS SAM or CloudFormation because Terraform is a multi-cloud tool that most developers use and there's no vendor lock-in. Installing Terraform and Docker was mostly straightforward but I did run into an issue with permissions when deploying an nginx test server. I tried a myriad of solutions from using 'docker context ls' to adding my user to the docker group. Ultimately, I performed a 'sudo reboot' and that resolved the issue. I eventually realized that SST is also an IaC tool that's built on Terraform/Pulumi. This provided some unique challenges in how to integrate both SST and Terraform but eventually decided to use SST for serverless features and Terraform for non-serverless like VPCs and IAMs. Terraform is definitely more feature-rich and low-level compared to SST though.
+
+**Lambda functions with Terraform**
