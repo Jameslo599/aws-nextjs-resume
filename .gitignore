@@ -46,9 +46,8 @@ next-env.d.ts
 .open-next
 
 # aws lambda
-*.zip
-lambda/rdsGetCounter/
-lambda/rdsIncrementCounter/
+/lambda/rdsGetCounter
+/lambda/rdsIncrementCounter
 
 # terraform
 terraform.tfstate
