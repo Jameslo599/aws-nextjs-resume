@@ -83,9 +83,9 @@ jobs:
       # Create deployment package (ZIP)
       - name: Create deployment package
         run: |
-          zip -r terraGetCounter.zip ./lambda/terraGetCounter.py
-          zip -r terraCheckUnique.zip ./lambda/terraCheckUnique.py
-          zip -r terraIncrementCounter.zip ./lambda/terraIncrementCounter.py
+          zip terraGetCounter.zip ./lambda/terraGetCounter.py
+          zip terraCheckUnique.zip ./lambda/terraCheckUnique.py
+          zip terraIncrementCounter.zip ./lambda/terraIncrementCounter.py
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
