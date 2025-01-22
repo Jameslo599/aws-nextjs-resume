@@ -8,6 +8,7 @@ table = dynamodb_client.Table('aws-nextjs-resume-production-ipTable')
 
 def lambda_handler(event, context):
     try:
+        # Check if IP exists
         ip = event['requestContext']['identity']['sourceIp']
         response = table.query(
             KeyConditionExpression=boto3.dynamodb.conditions.Key('ip_address').eq(ip)
