@@ -8,8 +8,7 @@ table = dynamodb_client.Table('aws-nextjs-resume-production-visitorsTable')
 def lambda_handler(event, context):
     try:
         query_params = event.get("queryStringParameters", {})
-        query_params['website_id'] = int(query_params['website_id'])
-        response = table.get_item(Key=query_params)
+        response = table.get_item(Key={'website': query_params['website_name'], 'id': int(query_params['website_id'])})
 
         # Function to convert Decimal to float or int
         def convert_decimal(obj):
