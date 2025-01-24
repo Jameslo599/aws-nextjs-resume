@@ -5,6 +5,9 @@ resource "aws_lambda_function" "terraGetCounter" {
   handler       = "terraGetCounter.lambda_handler"
   role          = "arn:aws:iam::503561410637:role/lambda-dynamodb"
   filename      = "terraGetCounter.zip"
+
+  # Set the source for the deployment package (e.g., path or S3 bucket)
+  source_code_hash = filebase64sha256("terraGetCounter.zip")
 }
 
 resource "aws_lambda_function" "terraCheckUnique" {
@@ -13,6 +16,9 @@ resource "aws_lambda_function" "terraCheckUnique" {
   handler       = "terraCheckUnique.lambda_handler"
   role          = "arn:aws:iam::503561410637:role/lambda-dynamodb"
   filename      = "terraCheckUnique.zip"
+
+  # Set the source for the deployment package (e.g., path or S3 bucket)
+  source_code_hash = filebase64sha256("terraCheckUnique.zip")
 }
 
 resource "aws_lambda_function" "terraIncrementCounter" {
@@ -21,4 +27,7 @@ resource "aws_lambda_function" "terraIncrementCounter" {
   handler       = "terraIncrementCounter.lambda_handler"
   role          = "arn:aws:iam::503561410637:role/lambda-dynamodb"
   filename      = "terraIncrementCounter.zip"
+
+  # Set the source for the deployment package (e.g., path or S3 bucket)
+  source_code_hash = filebase64sha256("terraIncrementCounter.zip")
 }
