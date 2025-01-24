@@ -2,46 +2,6 @@ resource "aws_api_gateway_rest_api" "api_gateway" {
   name        = "resume_gateway"
   description = "Cloud resume API gateway created with Terraform"
 
-  body = <<EOF
-  {
-    "swagger": "2.0",
-    "info": {
-      "title": "example-api",
-      "version": "1.0"
-    },
-    "paths": {
-      "/resource": {
-        "options": {
-          "x-amazon-apigateway-integration": {
-            "type": "mock",
-            "requestTemplates": {
-              "application/json": "{\"statusCode\": 200}"
-            },
-            "responses": {
-              "default": {
-                "statusCode": "200",
-                "responseParameters": {
-                  "method.response.header.Access-Control-Allow-Methods": "'GET,OPTIONS'",
-                  "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
-                  "method.response.header.Access-Control-Allow-Origin": "'*'"
-                }
-              }
-            }
-          },
-          "responses": {
-            "200": {
-              "description": "Default response for CORS preflight"
-            }
-          },
-          "produces": [
-            "application/json"
-          ]
-        }
-      }
-    }
-  }
-  EOF
-
   endpoint_configuration {
     types = ["REGIONAL"]  # Change from EDGE to REGIONAL
   }
