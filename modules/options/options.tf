@@ -1,7 +1,7 @@
 # OPTIONS Method for Preflight Requests
 
-variable "rest_api_id" {}
-variable "resource_id" {}
+variable "api_id" {}
+variable "api_resource_id" {}
 
 resource "aws_api_gateway_method" "_" {
   rest_api_id   = var.api_id
