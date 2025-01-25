@@ -1,3 +1,4 @@
+# API Gateway
 resource "aws_api_gateway_rest_api" "api_gateway" {
   name        = "resume_gateway"
   description = "Cloud resume API gateway created with Terraform"
@@ -6,6 +7,26 @@ resource "aws_api_gateway_rest_api" "api_gateway" {
     types = ["REGIONAL"]  # Change from EDGE to REGIONAL
   }
 }
+
+# OPTIONS method for all methods
+module "getCounter_options" {
+  source       = "./modules/options"
+  rest_api_id  = aws_api_gateway_rest_api.api_gateway.id
+  resource_id  = aws_api_gateway_resource.getCounter.id
+}
+
+module "incrementCounter_options" {
+  source       = "./modules/options"
+  rest_api_id  = aws_api_gateway_rest_api.api_gateway.id
+  resource_id  = aws_api_gateway_resource.incrementCounter.id
+}
+
+module "checkUnique_options" {
+  source       = "./modules/options"
+  rest_api_id  = aws_api_gateway_rest_api.api_gateway.id
+  resource_id  = aws_api_gateway_resource.checkUnique.id
+}
+
 
 # Add a new resource for /getCounter
 resource "aws_api_gateway_resource" "getCounter" {
@@ -44,6 +65,33 @@ resource "aws_api_gateway_integration" "getCounter_lambda_proxy" {
   passthrough_behavior = "WHEN_NO_MATCH"
 }
 
+# /getCounter CORS responses
+resource "aws_apigateway_method_response" "get_response" {
+  rest_api_id = aws_apigateway_rest_api.api_gateway.id
+  resource_id = aws_apigateway_resource.getCounter.id
+  http_method = aws_apigateway_method.getCounter_get_method.http_method
+  status_code = "200"
+
+  response_parameters = {
+    "method.response.header.Access-Control-Allow-Headers" = true,
+    "method.response.header.Access-Control-Allow-Methods" = true,
+    "method.response.header.Access-Control-Allow-Origin"  = true
+  }
+}
+
+resource "aws_apigateway_integration_response" "get_integration_response" {
+  rest_api_id             = aws_apigateway_rest_api.api_gateway.id
+  resource_id             = aws_apigateway_resource.getCounter.id
+  http_method             = aws_apigateway_method.getCounter_get_method.http_method
+  status_code             = aws_apigateway_method_response.get_response.status_code
+
+  response_parameters = {
+    "method.response.header.Access-Control-Allow-Headers" = "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
+    "method.response.header.Access-Control-Allow-Methods" = "'GET,OPTIONS'",
+    "method.response.header.Access-Control-Allow-Origin"  = "'*'"
+  }
+}
+
 # Permission for API Gateway to invoke the getCounter Lambda
 resource "aws_lambda_permission" "getCounter_api_gateway_invoke" {
   statement_id  = "AllowGetCounterInvoke"
@@ -78,6 +126,33 @@ resource "aws_api_gateway_integration" "incrementCounter_lambda_proxy" {
   uri                     = "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:503561410637:function:terraIncrementCounter/invocations"
 }
 
+# /incrementCounter CORS responses
+resource "aws_apigateway_method_response" "increment_response" {
+  rest_api_id = aws_apigateway_rest_api.api_gateway.id
+  resource_id = aws_apigateway_resource.incrementCounter.id
+  http_method = aws_apigateway_method.incrementCounter_get_method.http_method
+  status_code = "200"
+
+  response_parameters = {
+    "method.response.header.Access-Control-Allow-Headers" = true,
+    "method.response.header.Access-Control-Allow-Methods" = true,
+    "method.response.header.Access-Control-Allow-Origin"  = true
+  }
+}
+
+resource "aws_apigateway_integration_response" "increment_integration_response" {
+  rest_api_id             = aws_apigateway_rest_api.api_gateway.id
+  resource_id             = aws_apigateway_resource.incrementCounter.id
+  http_method             = aws_apigateway_method.incrementCounter_get_method.http_method
+  status_code             = aws_apigateway_method_response.increment_response.status_code
+
+  response_parameters = {
+    "method.response.header.Access-Control-Allow-Headers" = "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
+    "method.response.header.Access-Control-Allow-Methods" = "'PUT,OPTIONS'",
+    "method.response.header.Access-Control-Allow-Origin"  = "'*'"
+  }
+}
+
 # Permission for API Gateway to invoke the incrementCounter Lambda
 resource "aws_lambda_permission" "incrementCounter_api_gateway_invoke" {
   statement_id  = "AllowIncrementCounterInvoke"
@@ -110,6 +185,33 @@ resource "aws_api_gateway_integration" "checkUnique_lambda_proxy" {
   integration_http_method = "POST"
   type                    = "AWS_PROXY"
   uri                     = "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:503561410637:function:terraCheckUnique/invocations"
+}
+
+# /checkUnique CORS responses
+resource "aws_apigateway_method_response" "check_response" {
+  rest_api_id = aws_apigateway_rest_api.api_gateway.id
+  resource_id = aws_apigateway_resource.checkUnique.id
+  http_method = aws_apigateway_method.checkUnique_get_method.http_method
+  status_code = "200"
+
+  response_parameters = {
+    "method.response.header.Access-Control-Allow-Headers" = true,
+    "method.response.header.Access-Control-Allow-Methods" = true,
+    "method.response.header.Access-Control-Allow-Origin"  = true
+  }
+}
+
+resource "aws_apigateway_integration_response" "check_integration_response" {
+  rest_api_id             = aws_apigateway_rest_api.api_gateway.id
+  resource_id             = aws_apigateway_resource.checkUnique.id
+  http_method             = aws_apigateway_method.checkUnique_get_method.http_method
+  status_code             = aws_apigateway_method_response.check_response.status_code
+
+  response_parameters = {
+    "method.response.header.Access-Control-Allow-Headers" = "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
+    "method.response.header.Access-Control-Allow-Methods" = "'PUT,OPTIONS'",
+    "method.response.header.Access-Control-Allow-Origin"  = "'*'"
+  }
 }
 
 # Permission for API Gateway to invoke the checkUnique Lambda
