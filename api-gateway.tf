@@ -9,23 +9,7 @@ resource "aws_api_gateway_rest_api" "api_gateway" {
 }
 
 # OPTIONS method for all methods
-module "getCounter_options" {
-  source       = "./modules/options"
-  rest_api_id  = aws_api_gateway_rest_api.api_gateway.id
-  resource_id  = aws_api_gateway_resource.getCounter.id
-}
 
-module "incrementCounter_options" {
-  source       = "./modules/options"
-  rest_api_id  = aws_api_gateway_rest_api.api_gateway.id
-  resource_id  = aws_api_gateway_resource.incrementCounter.id
-}
-
-module "checkUnique_options" {
-  source       = "./modules/options"
-  rest_api_id  = aws_api_gateway_rest_api.api_gateway.id
-  resource_id  = aws_api_gateway_resource.checkUnique.id
-}
 
 
 # Add a new resource for /getCounter
