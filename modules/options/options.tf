@@ -3,17 +3,17 @@
 variable "rest_api_id" {}
 variable "resource_id" {}
 
-resource "aws_api_gateway_method" "options" {
+resource "aws_api_gateway_method" "options_method" {
   rest_api_id  = var.rest_api_id
   resource_id  = var.resource_id
   http_method  = "OPTIONS"
   authorization = "NONE"
 }
 
-resource "aws_api_gateway_method_response" "options" {
+resource "aws_api_gateway_method_response" "options_method_response" {
   rest_api_id = var.rest_api_id
   resource_id = var.resource_id
-  http_method = aws_api_gateway_method.options.http_method
+  http_method = aws_api_gateway_method.options_method.http_method
   status_code = "200"
   response_models = {
     "application/json" = "Empty"
@@ -37,7 +37,7 @@ resource "aws_api_gateway_integration" "options" {
   }
 }
 
-resource "aws_api_gateway_integration_response" "options" {
+resource "aws_api_gateway_integration_response" "options_integration" {
   rest_api_id = var.rest_api_id
   resource_id = var.resource_id
   http_method = aws_api_gateway_integration.options.http_method
