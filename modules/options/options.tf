@@ -13,7 +13,7 @@ resource "aws_api_gateway_method" "options_method" {
 resource "aws_api_gateway_integration" "options_integration" {
   rest_api_id             = var.rest_api_id
   resource_id             = var.resource_id
-  http_method             = aws_apigateway_method.options_method.http_method
+  http_method             = aws_api_gateway_method.options_method.http_method
   type                    = "MOCK"
 
   request_templates = {
