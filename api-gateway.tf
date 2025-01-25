@@ -130,7 +130,7 @@ resource "aws_api_gateway_integration" "incrementCounter_lambda_proxy" {
 resource "aws_api_gateway_method_response" "increment_response" {
   rest_api_id = aws_api_gateway_rest_api.api_gateway.id
   resource_id = aws_api_gateway_resource.incrementCounter.id
-  http_method = aws_api_gateway_method.incrementCounter_get_method.http_method
+  http_method = aws_api_gateway_method.incrementCounter_put_method.http_method
   status_code = "200"
 
   response_parameters = {
@@ -143,7 +143,7 @@ resource "aws_api_gateway_method_response" "increment_response" {
 resource "aws_api_gateway_integration_response" "increment_integration_response" {
   rest_api_id             = aws_api_gateway_rest_api.api_gateway.id
   resource_id             = aws_api_gateway_resource.incrementCounter.id
-  http_method             = aws_api_gateway_method.incrementCounter_get_method.http_method
+  http_method             = aws_api_gateway_method.incrementCounter_put_method.http_method
   status_code             = aws_api_gateway_method_response.increment_response.status_code
 
   response_parameters = {
@@ -191,7 +191,7 @@ resource "aws_api_gateway_integration" "checkUnique_lambda_proxy" {
 resource "aws_api_gateway_method_response" "check_response" {
   rest_api_id = aws_api_gateway_rest_api.api_gateway.id
   resource_id = aws_api_gateway_resource.checkUnique.id
-  http_method = aws_api_gateway_method.checkUnique_get_method.http_method
+  http_method = aws_api_gateway_method.checkUnique_post_method.http_method
   status_code = "200"
 
   response_parameters = {
@@ -204,7 +204,7 @@ resource "aws_api_gateway_method_response" "check_response" {
 resource "aws_api_gateway_integration_response" "check_integration_response" {
   rest_api_id             = aws_api_gateway_rest_api.api_gateway.id
   resource_id             = aws_api_gateway_resource.checkUnique.id
-  http_method             = aws_api_gateway_method.checkUnique_get_method.http_method
+  http_method             = aws_api_gateway_method.checkUnique_post_method.http_method
   status_code             = aws_api_gateway_method_response.check_response.status_code
 
   response_parameters = {
