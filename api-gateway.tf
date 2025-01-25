@@ -65,22 +65,6 @@ resource "aws_api_gateway_integration" "getCounter_lambda_proxy" {
   passthrough_behavior = "WHEN_NO_MATCH"
 }
 
-# /getCounter CORS responses
-resource "aws_api_gateway_method_response" "get_response" {
-  rest_api_id = aws_api_gateway_rest_api.api_gateway.id
-  resource_id = aws_api_gateway_resource.getCounter.id
-  http_method = aws_api_gateway_method.getCounter_get_method.http_method
-  status_code = "200"
-
-  response_parameters = {
-    "method.response.header.Access-Control-Allow-Headers" = true,
-    "method.response.header.Access-Control-Allow-Methods" = true,
-    "method.response.header.Access-Control-Allow-Origin"  = true
-  }
-}
-
-
-
 # Permission for API Gateway to invoke the getCounter Lambda
 resource "aws_lambda_permission" "getCounter_api_gateway_invoke" {
   statement_id  = "AllowGetCounterInvoke"
@@ -115,22 +99,6 @@ resource "aws_api_gateway_integration" "incrementCounter_lambda_proxy" {
   uri                     = "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:503561410637:function:terraIncrementCounter/invocations"
 }
 
-# /incrementCounter CORS responses
-resource "aws_api_gateway_method_response" "increment_response" {
-  rest_api_id = aws_api_gateway_rest_api.api_gateway.id
-  resource_id = aws_api_gateway_resource.incrementCounter.id
-  http_method = aws_api_gateway_method.incrementCounter_put_method.http_method
-  status_code = "200"
-
-  response_parameters = {
-    "method.response.header.Access-Control-Allow-Headers" = true,
-    "method.response.header.Access-Control-Allow-Methods" = true,
-    "method.response.header.Access-Control-Allow-Origin"  = true
-  }
-}
-
-
-
 # Permission for API Gateway to invoke the incrementCounter Lambda
 resource "aws_lambda_permission" "incrementCounter_api_gateway_invoke" {
   statement_id  = "AllowIncrementCounterInvoke"
@@ -164,22 +132,6 @@ resource "aws_api_gateway_integration" "checkUnique_lambda_proxy" {
   type                    = "AWS_PROXY"
   uri                     = "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:503561410637:function:terraCheckUnique/invocations"
 }
-
-# /checkUnique CORS responses
-resource "aws_api_gateway_method_response" "check_response" {
-  rest_api_id = aws_api_gateway_rest_api.api_gateway.id
-  resource_id = aws_api_gateway_resource.checkUnique.id
-  http_method = aws_api_gateway_method.checkUnique_post_method.http_method
-  status_code = "200"
-
-  response_parameters = {
-    "method.response.header.Access-Control-Allow-Headers" = true,
-    "method.response.header.Access-Control-Allow-Methods" = true,
-    "method.response.header.Access-Control-Allow-Origin"  = true
-  }
-}
-
-
 
 # Permission for API Gateway to invoke the checkUnique Lambda
 resource "aws_lambda_permission" "checkUnique_api_gateway_invoke" {
