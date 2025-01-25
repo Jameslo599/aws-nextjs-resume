@@ -16,17 +16,9 @@ resource "aws_api_gateway_integration" "options_integration" {
   http_method             = aws_api_gateway_method.options_method.http_method
   type                    = "MOCK"
 
-  integration_responses = [
-    {
-      status_code = "200"
-
-      response_parameters = {
-        "method.response.header.Access-Control-Allow-Headers" = "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
-        "method.response.header.Access-Control-Allow-Methods" = "'GET,POST,PUT,DELETE,OPTIONS'",
-        "method.response.header.Access-Control-Allow-Origin"  = "'*'"
-      }
-    }
-  ]
+  request_templates = {
+    "application/json" = "{\"statusCode\": 200}"
+  }
 }
 
 resource "aws_api_gateway_method_response" "options_method_response" {
