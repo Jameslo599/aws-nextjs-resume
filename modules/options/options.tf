@@ -20,16 +20,6 @@ resource "aws_api_gateway_integration" "options_integration" {
   request_templates = {
     "application/json" = "{\"statusCode\": 200}"
   }
-
-  integration_responses {
-    status_code = "200"
-
-    response_parameters = {
-      "method.response.header.Access-Control-Allow-Headers" = "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
-      "method.response.header.Access-Control-Allow-Methods" = "'GET,POST,PUT,DELETE,OPTIONS'",
-      "method.response.header.Access-Control-Allow-Origin"  = "'*'"
-    }
-  }
 }
 
 # Create the Method Response for the OPTIONS method
