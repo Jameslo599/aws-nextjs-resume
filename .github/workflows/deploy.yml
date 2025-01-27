@@ -94,12 +94,12 @@ jobs:
       - name: Terraform Init
         run: terraform init
 
-      - name: Terraform Plan
+      - name: Terraform Plan & Apply
         run: |
           # Calculate new name the string parsing is to remove *- at end of hash
-          getCounter_zip=$(md5sum <terraGetCounter.py | sed 's/ .*$//').zip
-          checkUnique_zip=$(md5sum <terraCheckUnique.py | sed 's/ .*$//').zip
-          increment_zip=$(md5sum <terraIncrementCounter.py | sed 's/ .*$//').zip
+          getCounter_zip=$(md5sum <lambda/terraGetCounter.py | sed 's/ .*$//').zip
+          checkUnique_zip=$(md5sum <lambda/terraCheckUnique.py | sed 's/ .*$//').zip
+          increment_zip=$(md5sum <lambda/terraIncrementCounter.py | sed 's/ .*$//').zip
 
           # Rename the zip with the new hashed name
           mv terraGetCounter.zip ${getCounter_zip}
@@ -112,9 +112,9 @@ jobs:
           export TF_VAR_increment_zip=${increment_zip}
 
           terraform plan
-
-      - name: Terraform Apply
-        run: terraform apply -auto-approve
+          terraform apply -auto-approve
+      # - name: Terraform Apply
+      #   run: terraform apply -auto-approve
 
       - name: Deploy with SST
         run: |
