@@ -94,6 +94,7 @@ jobs:
           increment_zip=$(md5sum <terraIncrementCounter.py | sed 's/ .*$//').zip
 
           # Rename the zip with the new hashed name
+          cd ..
           mv terraGetCounter.zip ${getCounter_zip}
           mv terraCheckUnique.zip ${checkUnique_zip}
           mv terraIncrementCounter.zip ${increment_zip}
