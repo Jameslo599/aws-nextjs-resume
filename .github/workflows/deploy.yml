@@ -84,9 +84,24 @@ jobs:
       - name: Create deployment package
         run: |
           cd lambda
-          zip -X ../terraGetCounter.zip terraGetCounter.py
-          zip -X ../terraCheckUnique.zip terraCheckUnique.py
-          zip -X ../terraIncrementCounter.zip terraIncrementCounter.py
+          zip ../terraGetCounter.zip terraGetCounter.py
+          zip ../terraCheckUnique.zip terraCheckUnique.py
+          zip ../terraIncrementCounter.zip terraIncrementCounter.py
+
+          # Calculate new name the string parsing is to remove *- at end of hash
+          getCounter_zip=$(md5sum <terraGetCounter.py | sed 's/ .*$//').zip
+          checkUnique_zip=$(md5sum <terraCheckUnique.py | sed 's/ .*$//').zip
+          increment_zip=$(md5sum <terraIncrementCounter.py | sed 's/ .*$//').zip
+
+          # Rename the zip with the new hashed name
+          mv terraGetCounter.zip ${getCounter_zip}
+          mv terraCheckUnique.zip ${checkUnique_zip}
+          mv terraIncrementCounter.zip ${increment_zip}
+
+          # Set TF env var
+          export TF_VAR_getCounter_zip=${getCounter_zip}
+          export TF_VAR_checkUnique_zip=${checkUnique_zip}
+          export TF_VAR_increment_zip=${increment_zip}
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
