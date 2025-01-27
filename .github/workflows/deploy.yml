@@ -80,6 +80,12 @@ jobs:
             echo "Policies successfully validated!"
           done
 
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform Init
+        run: terraform init
+
       # Create deployment package (ZIP)
       - name: Create deployment package
         run: |
@@ -94,21 +100,14 @@ jobs:
           increment_zip=$(md5sum <terraIncrementCounter.py | sed 's/ .*$//').zip
 
           # Rename the zip with the new hashed name
-          cd ..
-          mv terraGetCounter.zip ${getCounter_zip}
-          mv terraCheckUnique.zip ${checkUnique_zip}
-          mv terraIncrementCounter.zip ${increment_zip}
+          mv ../terraGetCounter.zip ${getCounter_zip}
+          mv ../terraCheckUnique.zip ${checkUnique_zip}
+          mv ../terraIncrementCounter.zip ${increment_zip}
 
           # Set TF env var
           export TF_VAR_getCounter_zip=${getCounter_zip}
           export TF_VAR_checkUnique_zip=${checkUnique_zip}
           export TF_VAR_increment_zip=${increment_zip}
-
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v3
-
-      - name: Terraform Init
-        run: terraform init
 
       - name: Terraform Plan
         run: terraform plan
