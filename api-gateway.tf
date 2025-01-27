@@ -145,9 +145,11 @@ resource "aws_lambda_permission" "checkUnique_api_gateway_invoke" {
 resource "aws_api_gateway_deployment" "prod_deploy" {
   rest_api_id = aws_api_gateway_rest_api.api_gateway.id
 
-  triggers = {
-    redeployment = sha1(jsonencode(aws_api_gateway_rest_api.api_gateway.body))
-  }
+  depends_on = [
+    aws_api_gateway_method.checkUnique_post_method,
+    aws_api_gateway_method.getCounter_get_method
+    aws_api_gateway_method.incrementCounter_put_method
+  ]
 
   lifecycle {
     create_before_destroy = true

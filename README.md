@@ -59,4 +59,4 @@ Utilized Terraform to recreate my Lambda functions and there were a few hurdles 
 
 Converting the API Gateway to IaC was the hardest part due to learning more complex syntax and the sheer amount of boilerplate necessary to set up multiple methods. I also got stuck on implementing an OPTIONS method to enable CORS but I used a template provided online and that ended up working well after applying my recourse and gateway ids.
 
-Enabled code signing on Git and modified gpg-agent to cache passcode for efficiency. Also created a ruleset to enforce code signing before merging branches.
+Enabled code signing on Git and modified gpg-agent to cache passcode for efficiency. Also created a ruleset to enforce code signing before merging branches. Ran into lambda functions updating every commit due to secure hash comparing local zip to s3 zip that has KMS encryption. Ended up implementing my own version control using MD5
