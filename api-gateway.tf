@@ -147,7 +147,7 @@ resource "aws_api_gateway_deployment" "prod_deploy" {
 
   depends_on = [
     aws_api_gateway_method.checkUnique_post_method,
-    aws_api_gateway_method.getCounter_get_method
+    aws_api_gateway_method.getCounter_get_method,
     aws_api_gateway_method.incrementCounter_put_method
   ]
 
