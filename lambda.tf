@@ -14,7 +14,7 @@ resource "aws_lambda_function" "terraGetCounter" {
   s3_key        = aws_s3_object.lambda_get_counter.key
 
   # Reference the code signing configuration
-  signing_profile_version_arn = aws_lambda_code_signing_config.lambda_csc.arn
+  code_signing_config_arn = aws_lambda_code_signing_config.lambda_csc.arn
 }
 
 variable "checkUnique_zip" {
@@ -32,7 +32,7 @@ resource "aws_lambda_function" "terraCheckUnique" {
   s3_key        = aws_s3_object.lambda_check_unique.key
 
   # Reference the code signing configuration
-  signing_profile_version_arn = aws_lambda_code_signing_config.lambda_csc.arn
+  code_signing_config_arn = aws_lambda_code_signing_config.lambda_csc.arn
 }
 
 variable "increment_zip" {
@@ -50,5 +50,5 @@ resource "aws_lambda_function" "terraIncrementCounter" {
   s3_key        = aws_s3_object.lambda_increment_counter.key
 
   # Reference the code signing configuration
-  signing_profile_version_arn = aws_lambda_code_signing_config.lambda_csc.arn
+  code_signing_config_arn = aws_lambda_code_signing_config.lambda_csc.arn
 }
