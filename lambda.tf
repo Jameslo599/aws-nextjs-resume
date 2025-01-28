@@ -10,11 +10,11 @@ resource "aws_lambda_function" "terraGetCounter" {
   role          = "arn:aws:iam::503561410637:role/lambda-dynamodb"
   filename      = "${var.getCounter_zip}"
 
-  # s3_bucket     = aws_s3_bucket.lambda_deployment.bucket
-  # s3_key        = aws_s3_object.lambda_get_counter.key
+  s3_bucket     = aws_s3_bucket.lambda_deployment.bucket
+  s3_key        = aws_s3_object.lambda_get_counter.key
 
   # Reference the code signing configuration
-  # signing_profile_version_arn = aws_lambda_code_signing_config.lambda_csc.arn
+  signing_profile_version_arn = aws_lambda_code_signing_config.lambda_csc.arn
 }
 
 variable "checkUnique_zip" {
@@ -28,11 +28,11 @@ resource "aws_lambda_function" "terraCheckUnique" {
   role          = "arn:aws:iam::503561410637:role/lambda-dynamodb"
   filename      = "${var.checkUnique_zip}"
 
-  # s3_bucket     = aws_s3_bucket.lambda_deployment.bucket
-  # s3_key        = aws_s3_object.lambda_check_unique.key
+  s3_bucket     = aws_s3_bucket.lambda_deployment.bucket
+  s3_key        = aws_s3_object.lambda_check_unique.key
 
   # Reference the code signing configuration
-  # signing_profile_version_arn = aws_lambda_code_signing_config.lambda_csc.arn
+  signing_profile_version_arn = aws_lambda_code_signing_config.lambda_csc.arn
 }
 
 variable "increment_zip" {
@@ -46,9 +46,9 @@ resource "aws_lambda_function" "terraIncrementCounter" {
   role          = "arn:aws:iam::503561410637:role/lambda-dynamodb"
   filename      = "${var.increment_zip}"
 
-  # s3_bucket     = aws_s3_bucket.lambda_deployment.bucket
-  # s3_key        = aws_s3_object.lambda_increment_counter.key
+  s3_bucket     = aws_s3_bucket.lambda_deployment.bucket
+  s3_key        = aws_s3_object.lambda_increment_counter.key
 
   # Reference the code signing configuration
-  # signing_profile_version_arn = aws_lambda_code_signing_config.lambda_csc.arn
+  signing_profile_version_arn = aws_lambda_code_signing_config.lambda_csc.arn
 }
