@@ -33,3 +33,30 @@ resource "aws_dynamodb_table" "tf_lock" {
     type = "S"
   }
 }
+
+# Code signing
+resource "aws_s3_bucket" "lambda_deployment" {
+  bucket = "my-lambda-deployment-bucket"
+  acl    = "private"
+}
+
+resource "aws_s3_object" "lambda_get_counter" {
+  bucket = aws_s3_bucket.lambda_deployment.bucket
+  key    = "lambda_get_counter.zip"
+  source = "${var.getCounter_zip}"  # Path to your Lambda zip file
+  acl    = "private"
+}
+
+resource "aws_s3_object" "lambda_check_unique" {
+  bucket = aws_s3_bucket.lambda_deployment.bucket
+  key    = "lambda_check_unique.zip"
+  source = "${var.checkUnique_zip}"  # Path to your Lambda zip file
+  acl    = "private"
+}
+
+resource "aws_s3_object" "lambda_increment_counter" {
+  bucket = aws_s3_bucket.lambda_deployment.bucket
+  key    = "lambda_increment_counter.zip"
+  source = "${var.increment_zip}"  # Path to your Lambda zip file
+  acl    = "private"
+}
