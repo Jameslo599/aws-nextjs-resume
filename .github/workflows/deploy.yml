@@ -111,36 +111,6 @@ jobs:
           export TF_VAR_checkUnique_zip=${checkUnique_zip}
           export TF_VAR_increment_zip=${increment_zip}
 
-          # For terraGetCounter
-          aws signer start-signing-job --profile arn:aws:signer:us-east-1:503561410637:/signing-profiles/prod_sp_20250128014257502600000001 --source S3Bucket=awsjameslo-terraform-lambda-deployment,S3Key=lambda_get_counter.zip
-
-          # For terraCheckUnique
-          aws signer start-signing-job --profile arn:aws:signer:us-east-1:503561410637:/signing-profiles/prod_sp_20250128014257502600000001 --source S3Bucket=awsjameslo-terraform-lambda-deployment,S3Key=lambda_check_unique.zip
-
-          # For terraIncrementCounter
-          aws signer start-signing-job --profile arn:aws:signer:us-east-1:503561410637:/signing-profiles/prod_sp_20250128014257502600000001 --source S3Bucket=awsjameslo-terraform-lambda-deployment,S3Key=lambda_increment_counter.zip
-
-          # Update terraGetCounter Lambda function
-          aws lambda update-function-code \
-            --function-name terraGetCounter \
-            --s3-bucket awsjameslo-terraform-lambda-deployment \
-            --s3-key lambda_get_counter.zip \
-            --signing-profile-version-arn arn:aws:signer:us-east-1:503561410637:/signing-profiles/prod_sp_20250128014257502600000001/NSp1DP5WYo
-
-          # Update terraCheckUnique Lambda function
-          aws lambda update-function-code \
-            --function-name terraCheckUnique \
-            --s3-bucket awsjameslo-terraform-lambda-deployment \
-            --s3-key lambda_check_unique.zip \
-            --signing-profile-version-arn arn:aws:signer:us-east-1:503561410637:/signing-profiles/prod_sp_20250128014257502600000001/NSp1DP5WYo
-
-          # Update terraIncrementCounter Lambda function
-          aws lambda update-function-code \
-            --function-name terraIncrementCounter \
-            --s3-bucket awsjameslo-terraform-lambda-deployment \
-            --s3-key lambda_increment_counter.zip \
-            --signing-profile-version-arn arn:aws:signer:us-east-1:503561410637:/signing-profiles/prod_sp_20250128014257502600000001/NSp1DP5WYo
-
           terraform plan
           terraform apply -auto-approve
 

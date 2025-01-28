@@ -8,13 +8,7 @@ resource "aws_lambda_function" "terraGetCounter" {
   runtime       = "python3.9"
   handler       = "terraGetCounter.lambda_handler"
   role          = "arn:aws:iam::503561410637:role/lambda-dynamodb"
-  # filename      = "${var.getCounter_zip}"
-
-  s3_bucket     = aws_s3_bucket.lambda_deployment.bucket
-  s3_key        = aws_s3_object.lambda_get_counter.key
-
-  # Reference the code signing configuration
-  code_signing_config_arn = aws_lambda_code_signing_config.lambda_csc.arn
+  filename      = "${var.getCounter_zip}"
 }
 
 variable "checkUnique_zip" {
@@ -26,13 +20,7 @@ resource "aws_lambda_function" "terraCheckUnique" {
   runtime       = "python3.9"
   handler       = "terraCheckUnique.lambda_handler"
   role          = "arn:aws:iam::503561410637:role/lambda-dynamodb"
-  # filename      = "${var.checkUnique_zip}"
-
-  s3_bucket     = aws_s3_bucket.lambda_deployment.bucket
-  s3_key        = aws_s3_object.lambda_check_unique.key
-
-  # Reference the code signing configuration
-  code_signing_config_arn = aws_lambda_code_signing_config.lambda_csc.arn
+  filename      = "${var.checkUnique_zip}"
 }
 
 variable "increment_zip" {
@@ -44,11 +32,5 @@ resource "aws_lambda_function" "terraIncrementCounter" {
   runtime       = "python3.9"
   handler       = "terraIncrementCounter.lambda_handler"
   role          = "arn:aws:iam::503561410637:role/lambda-dynamodb"
-  # filename      = "${var.increment_zip}"
-
-  s3_bucket     = aws_s3_bucket.lambda_deployment.bucket
-  s3_key        = aws_s3_object.lambda_increment_counter.key
-
-  # Reference the code signing configuration
-  code_signing_config_arn = aws_lambda_code_signing_config.lambda_csc.arn
+  filename      = "${var.increment_zip}"
 }
