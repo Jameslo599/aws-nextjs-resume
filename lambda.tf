@@ -8,7 +8,7 @@ resource "aws_lambda_function" "terraGetCounter" {
   runtime       = "python3.9"
   handler       = "terraGetCounter.lambda_handler"
   role          = "arn:aws:iam::503561410637:role/lambda-dynamodb"
-  filename      = "${var.getCounter_zip}"
+  # filename      = "${var.getCounter_zip}"
 
   s3_bucket     = aws_s3_bucket.lambda_deployment.bucket
   s3_key        = aws_s3_object.lambda_get_counter.key
@@ -26,7 +26,7 @@ resource "aws_lambda_function" "terraCheckUnique" {
   runtime       = "python3.9"
   handler       = "terraCheckUnique.lambda_handler"
   role          = "arn:aws:iam::503561410637:role/lambda-dynamodb"
-  filename      = "${var.checkUnique_zip}"
+  # filename      = "${var.checkUnique_zip}"
 
   s3_bucket     = aws_s3_bucket.lambda_deployment.bucket
   s3_key        = aws_s3_object.lambda_check_unique.key
@@ -44,7 +44,7 @@ resource "aws_lambda_function" "terraIncrementCounter" {
   runtime       = "python3.9"
   handler       = "terraIncrementCounter.lambda_handler"
   role          = "arn:aws:iam::503561410637:role/lambda-dynamodb"
-  filename      = "${var.increment_zip}"
+  # filename      = "${var.increment_zip}"
 
   s3_bucket     = aws_s3_bucket.lambda_deployment.bucket
   s3_key        = aws_s3_object.lambda_increment_counter.key
