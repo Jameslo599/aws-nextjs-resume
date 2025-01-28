@@ -36,7 +36,7 @@ resource "aws_dynamodb_table" "tf_lock" {
 
 # Code signing
 resource "aws_s3_bucket" "lambda_deployment" {
-  bucket = "my-lambda-deployment-bucket"
+  bucket = "awsjameslo-terraform-lambda-deployment"
 }
 
 resource "aws_s3_bucket_acl" "lambda_deployment_acl" {
