@@ -20,8 +20,4 @@ resource "aws_lambda_code_signing_config" "lambda_csc" {
   }
 
   description = "For Lambda functions"
-
-  code_signature_configs {
-    allowed_content_types = ["ZIP"]
-  }
 }

@@ -37,6 +37,10 @@ resource "aws_dynamodb_table" "tf_lock" {
 # Code signing
 resource "aws_s3_bucket" "lambda_deployment" {
   bucket = "my-lambda-deployment-bucket"
+}
+
+resource "aws_s3_bucket_acl" "lambda_deployment_acl" {
+  bucket = aws_s3_bucket.lambda_deployment.bucket
   acl    = "private"
 }
 
