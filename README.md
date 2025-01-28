@@ -59,4 +59,8 @@ Utilized Terraform to recreate my Lambda functions and there were a few hurdles 
 
 Converting the API Gateway to IaC was the hardest part due to learning more complex syntax and the sheer amount of boilerplate necessary to set up multiple methods. I also got stuck on implementing an OPTIONS method to enable CORS but I used a template provided online and that ended up working well after applying my recourse and gateway ids.
 
+**Security**
 Enabled code signing on Git and modified gpg-agent to cache passcode for efficiency. Also created a ruleset to enforce code signing before merging branches. Ran into lambda functions updating every commit due to secure hash comparing local zip to s3 zip that has KMS encryption. Ended up implementing my own version control using MD5
+
+Implementing code scanning on GitHub with CodeQL that is scheduled to run monthly to
+guard against dependency decay and to fail merge requests if vulnerabilities are level "High" or higher. Also learned how to use Syft to generate a Software Bill of Materials by inspecting my application to identify all dependencies within. Grype then takes the SBOM and scans it against a vulnerability database, flagging any known security risks.
