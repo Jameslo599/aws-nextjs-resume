@@ -1,7 +1,12 @@
 name: SBOM Security Pipeline
 
 on:
-  workflow_dispatch: # Allows manual triggering of the workflow
+  # Allows manual triggering of the workflow
+  workflow_dispatch:
+  # This pipeline will only execute when pushing to master
+  push:
+    branches:
+      - master
 
 jobs:
   security-scan:
@@ -11,20 +16,23 @@ jobs:
       - name: Install Syft
         run: |
           curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sh -s -- -b /usr/local/bin
+          syft --version
+
       - name: Install Grype
         run: |
           curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b /usr/local/bin
+          grype --version
 
       - name: Generate SBOM for Docker Hub Image with Syft
-        run: syft . -o cyclonedx-json > resume-sbom.json
+        run: syft . -o cyclonedx-json > resume-sbom-$(date +'%Y%m%d%H%M').json
 
       - name: Scan SBOM with Grype
-        run: grype sbom:resume-sbom.json -o json > grype-sbom-scan.json
+        run: grype sbom:resume-sbom-$(date +'%Y%m%d%H%M').json -o json > grype-sbom-$(date +'%Y%m%d%H%M').json
 
       - name: Upload SBOM and Scan Results as Artifacts
         uses: actions/upload-artifact@v3
         with:
           name: Reports
           path: |
-            resume-sbom.json
-            grype-sbom-scan.json
+            resume-sbom-*.json
+            grype-sbom-*.json
