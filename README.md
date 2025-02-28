@@ -27,40 +27,52 @@ Now it was time to connect the frontend to backend. I created a Counter componen
 I later opted to change the Counter component to use client-side rendering for learning and innovation. Figuring out CORS with CSR took some time but I ended up learning which headers and formatting is needed when returning responses using lambda proxy. The big error that took me so long to resolve was that my except statement was not returning the proper headers. This caused my entire code to fail for any method other than GET.
 
 **CI/CD Pipeline**
+
 In order to implement CI/CD with Github Actions for SST, there was some scripting involved where I had to remove aws profiles in favor of environment variables. This also brought up an issue where I originally used sso to obtain authentication in the aws CLI but since that could not be automated I had to find an alternative. The solution turned out to be including the same access id and secret, but also the session token and these three combined with default region us-east-1 bypassed the need to use sso. It was quite gratifying to implement this feature!
 
 I later realized IAM environment variables are rotated every 12 hours so to create a more automated and dynamic pipeline, I implemented OpenID Connect (OIDC) by creating an IAM role for Github with AdminAccess to assume the role during the workflow. Then I added "Configure AWS Credentials" Action for GitHub Actions in my workflow which handles authentication by obtaining short-lived credentials for each deployment.
 
 **Using AWS RDS Postgres**
+
 For a more cost-effective solution or if a SQL DB is preferred, I also implemented AWS RDS Postgres as an option. Since Postgres is not a fully managed, serverless database provided by AWS and cannot take advantage of IAM permissions, I set up a Virtual Private Cloud (VPC) with two public subnets, a routing table and a internet gateway. I then created a security group to only allow inbound traffic from other members of the same security group. The RDS Postgres was set up and included in the security group. I definitely had to brush up on my SQL since there isn't a web console to create tables unlike with DynamoDB. I then created two Lambda functions with same functionality as the previously created ones. I spend much time writing my own functions locally and learning how to compress and upload it to AWS. I had trouble finding the right psycopg2 package and finally found the right one using psycopg2-binary. The difference was that I needed to include environment variables in the lambda function in order to connect to the database. This is also where AWS Secrets Manager was used in conjunction with RDS proxy to create a more secure method of storing my host endpoint versus storing it as an env variable. I huge challenge I had with this feature was error handling. I wrote a very general error message of 'Database could not be connected' which displayed even though I was connected but had a syntax error. Therefore I spent a lot of time debugging the wrong issue.
 
 **CloudWatch Alarms**
+
 To monitor my applications, I setup three alarms: one for high API gateway latency and two for excessive Lambda invocations and errors within a time-frame. I really like the UI for this feature and it's amazing how generous Amazon is with their free-tier. I used AWS SNS to email me when an alarm is in alert mode which. To add additional integrations, I setup PagerDuty as an HTTPS subscription to my SNS topic and this will send a push notification through the mobile app on my phone when a CloudWatch alarm goes off. This makes it very hard to miss alerts and I can also schedule an on-call rotation if needed. I also setup Slack integration as a Lambda subscription to my SNS topic and this is great just to keep everyone in the team on the same page.
 
 **IAM Access Analyzer**
+
 To better enforce principle of least privilege, I utilized the IAM Access Analyzer to detect unused roles and permissions. I found that this tool was extremely helpful in identifying over-permissive roles and providing recommended policies for substitution. One of my biggest worries was having to manually writes each policy, but I've been using the recommended policies without any issue.
 
 In addition, I also added the access analyzer to my CI/CD pipeline to validate policies written in /policies before merging the pull request. This is to ensure that over-permissive or erroneous policies never make it to the cloud. I essentially wrote a script that checks every .json file in /policies and if an error is detected, I stop the workflow with 'exit 1'. I learned how to do this after going through AWS's 'Integrating AWS IAM Access Analyzer in a CI/CD Pipeline' workshop.
 
 **Cypress End-to-End Testing**
+
 To make sure my API works as expected, I included Cypress in my CI/CD pipeline to execute end-to-end tests. This was my first time working with Cypress and I found it to be very straightforward and their documentation is one of the best. Cypress bundles popular libraries such as Mocha and Chai so there was a slight learning curve for the syntax but it was very intuitive. I decided on E2E over unit tests because my code is mostly talking to AWS and without actual services to call, I would have to "mock" or pretend to call those services which is ineffective. Instead, E2E tests run after my API is deployed. This means I can use the real, live URL of my API to ensure it provides the expected responses to a test call. I ended up writing a test for each API endpoint, site loading and error validation. Since including testing in my main workflow would certainly lead to longer deploy times, I utilized Cypress's parallelization feature to split tests between two containers for faster deploy times.
 
 **Unique Visitors**
+
 At this point, the counter will increment but it is on every page refresh. This is not useful for tracking visitors so I created another DynamoDB table to store visitors based on their ip addresses that I obtain from the API Gateway. Implementing the logic required learning a bit of the datetime module in Python but I knew how to format dates and calculates differences in time using UNIX. There may be some privacy concerns for European visitors, but since this site is intended to be shown only in America, I didn't think it was necessary to create a one-way hash of the address.
 
 **Firewalls and Throttling**
+
 Currently, my API is a public API, meaning anyone on the internet can find it and make requests directly, opening myself to injection and DDoS attacks. The best way to mitigate these risks is to use a web application firewall (WAF). I learned how to do so with AWS WAF to combat bots, untrustworthy IP addresses, common OWASP exploits, bad inputs, Linux and Windows OS exploits. However, there is a cost associated with running a WAF so at this point I decided to forego the firewall. Instead, I implemented a usage plan for API-level throttling so clients cannot make an egregious amount of requests and the max number of requests per expected visitors per month is well within the free-tier limits.
 
 **Infrastructure as Code (IaC) with Terraform**
+
 I decided to use Terraform instead of AWS SAM or CloudFormation because Terraform is a multi-cloud tool that most developers use and there's no vendor lock-in. Installing Terraform and Docker was mostly straightforward but I did run into an issue with permissions when deploying an nginx test server. I tried a myriad of solutions from using 'docker context ls' to adding my user to the docker group. Ultimately, I performed a 'sudo reboot' and that resolved the issue. I eventually realized that SST is also an IaC tool that's built on Terraform/Pulumi. This provided some unique challenges in how to integrate both SST and Terraform but eventually decided to use SST for serverless features and Terraform for non-serverless like VPCs and IAMs. Terraform is definitely more feature-rich and low-level compared to SST though.
 
 **Lambda functions with Terraform**
+
 Utilized Terraform to recreate my Lambda functions and there were a few hurdles along the way that were overcome. After implementing Terraform into my workflow, instead of updating existing functions, it sought to create a brand new one and couldn't resolve the action due to existing function. I realized that TF most likely wasn't reading off of an existing state so I figured out that I should use the import command to track the state of a resource with its arn. Then the challenge was how could I have my workflow read off of my local tfstate. I realized that I should login with AWS CLI and implement a backend tfstate and stored it in S3 + DynamoDB as a table lock to prevent race conditions. After implementing this feature, the issue resolved.
 
 Converting the API Gateway to IaC was the hardest part due to learning more complex syntax and the sheer amount of boilerplate necessary to set up multiple methods. I also got stuck on implementing an OPTIONS method to enable CORS but I used a template provided online and that ended up working well after applying my recourse and gateway ids.
 
 **Security**
+
 Enabled code signing on Git and modified gpg-agent to cache passcode for efficiency. Also created a ruleset to enforce code signing before merging branches. Ran into lambda functions updating every commit due to secure hash comparing local zip to s3 zip that has KMS encryption. Ended up implementing my own version control using MD5
 
 Implementing code scanning on GitHub with CodeQL that is scheduled to run monthly to
 guard against dependency decay and to fail merge requests if vulnerabilities are level "High" or higher. Also learned how to use Syft to generate a Software Bill of Materials by inspecting my application to identify all dependencies within. Grype then takes the SBOM and scans it against a vulnerability database, flagging any known security risks.
+
+I decided not to implement Lambda code signing because enabling s3 bucket versioning can be costly.

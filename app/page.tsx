@@ -47,7 +47,7 @@ export default function Home() {
           <div className="relative pt-1">
             <span className="font-bold">Software Developer,&nbsp;</span>
             Universal Associates - Dallas, Texas&nbsp;
-            <span className="sm:absolute right-0">Jan 2023 - Present</span>
+            <span className="sm:absolute right-0">April 2023 - Present</span>
           </div>
           <ul className="list-disc ml-5">
             <li>
@@ -69,29 +69,6 @@ export default function Home() {
             <li>
               Implemented CI/CD pipelines with Terraform and used E2E testing
               with Cypress for 20% faster development.
-            </li>
-          </ul>
-          <div className="relative pt-1">
-            <span className="font-bold">Network Administrator,&nbsp;</span>
-            Zen Sushi & Grill – McKinney, Texas&nbsp;
-            <span className="sm:absolute right-0">Jan 2022 – Jan 2023</span>
-          </div>
-          <ul className="list-disc ml-5">
-            <li>
-              Developed website front-end using JavaScript and improved overall
-              network performance by 30%.
-            </li>
-            <li>
-              Reduced IT costs by 20% through better vendor contracts and
-              consolidating internet and phone services.
-            </li>
-            <li>
-              Streamlined orders by 25% after implementing networked POS systems
-              and cloud-based management tools.
-            </li>
-            <li>
-              Trained and mentored 5+ staff members on network troubleshooting
-              and basic IT tasks.
             </li>
           </ul>
         </section>
@@ -176,9 +153,10 @@ export default function Home() {
           <div className="after:content-[''] border-t-[1px] border-black"></div>
           <div className="relative">
             <span className="font-bold">
-              University of Texas at Austin&nbsp;
+              Western Governors University&nbsp;
             </span>
-            – Bachelor of Science in Biochemistry; Minor in Chinese
+            – Bachelor of Science in Computer Science
+            <span className="absolute right-0">Exp. Graduation: Dec. 2025</span>
           </div>
         </section>
       </main>
